@@ -43,7 +43,8 @@ public class BoletoService {
     public Boleto gerarBoleto() {
         Beneficiario beneficiario = gerarBeneficiario();
         Pagador pagador = gerarPagador();
-
+        
+        Banco banco = new BancoDoBrasil(); 
         Boleto boleto = Boleto.novoBoleto()
                 .comValorBoleto(new BigDecimal("150.00"))
                 .comEspecieMoeda("R$")
@@ -51,30 +52,24 @@ public class BoletoService {
                 .comAceite(true)
                 .comEspecieDocumento("DV") 
                 .comNumeroDoDocumento("123456") 
-                .comDatas(  
+                .comDatas(
                         Datas.novasDatas()
                                 .comDocumento(1, 5, 2013)
                                 .comProcessamento(1, 5, 2013)
                                 .comVencimento(2, 5, 2013))
-                .comPagador(pagador) 
-                .comBeneficiario(beneficiario) 
-                .comInstrucoes("Instrução 1", "Instrução 2") 
+                .comPagador(pagador)
+                .comBeneficiario(beneficiario)
+                .comBanco(banco)
+                .comInstrucoes("Instrução 1", "Instrução 2")
                 .comLocaisDePagamento("Banco X", "Agência Y")
                 .comQuantidadeMoeda(BigDecimal.valueOf(2.0))
                 .comValorMoeda(BigDecimal.valueOf(1.0));
-
-        boleto.comBanco(gerBanco(boleto, beneficiario));
-
+    
+        banco.geraCodigoDeBarrasPara(boleto); 
+    
         return boleto;
     }
-
-    private Banco gerBanco(Boleto boleto, Beneficiario beneficiario) {
-        Banco banco = new BancoDoBrasil();
-        banco.geraCodigoDeBarrasPara(boleto); 
-        banco.getNossoNumeroFormatado(beneficiario);
-        banco.getNossoNumeroECodigoDocumento(boleto);
-        return banco;
-    }
+    
 
     private Pagador gerarPagador() {
         return Pagador.novoPagador()
@@ -94,19 +89,20 @@ public class BoletoService {
 
     private Beneficiario gerarBeneficiario() {
         return Beneficiario.novoBeneficiario()
-        .comNomeBeneficiario("Nome do Beneficiário")
-        .comAgencia("6501") // Código da agência Matriz-São Paulo
-        .comDigitoAgencia("X") // Digito da agência, se houver
-        .comCodigoBeneficiario("1234567") // Código do beneficiário (número da conta)
-        .comDigitoCodigoBeneficiario("Y") // Dígito do código do beneficiário
-        .comCarteira("18") // Código da carteira
-        .comNossoNumero("1234567890") // Nosso número
-        .comDigitoNossoNumero("Z") // Dígito do nosso número
-        .comDocumento("00.000.000/0000-00") // CNPJ do beneficiário
-        .comEndereco(gerarEndereco())
-        .comNumeroConvenio("1234567") // Número do convênio
-        .comModalidade(Modalidade.COM_REGISTRO);
+            .comNomeBeneficiario("Nome do Beneficiário")
+            .comAgencia("6501") // Código da agência Matriz-São Paulo
+            .comDigitoAgencia("X") // Dígito da agência, se houver
+            .comCodigoBeneficiario("1234567") // Código do beneficiário (número da conta)
+            .comDigitoCodigoBeneficiario("Y") // Dígito do código do beneficiário
+            .comCarteira("18") // Código da carteira (18 = com registro)
+            .comNossoNumero("1234567890") // Nosso número
+            .comDigitoNossoNumero("Z") // Dígito do nosso número
+            .comDocumento("00.000.000/0000-00") // CNPJ do beneficiário
+            .comEndereco(gerarEndereco())
+            .comNumeroConvenio("1234567") // Número do convênio
+            .comModalidade(Modalidade.COM_REGISTRO); // Modalidade registrada
     }
+    
 
     public List<BoletoModelo> buscarBoletos() {
         return boletoRepository.findAll();
