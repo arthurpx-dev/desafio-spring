@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.desafio_spring.dtos.BoletoResponseDto;
-import com.example.desafio_spring.models.BoletoModelo;
 import com.example.desafio_spring.services.BoletoService;
 
 
@@ -28,34 +27,34 @@ public class BoletoController {
     private BoletoService boletoService;
 
 
-    @GetMapping("gerar")
-    public GeradorDeBoleto geraBoleto() {
-        return boletoService.geradorDeBoletoPdf();
-    }
+    // @GetMapping("gerar")
+    // public GeradorDeBoleto geraBoleto() {
+    //     return boletoService.geradorDeBoletoPdf();
+    // }
 
-    @GetMapping()
-    public List<BoletoModelo> buscarBoletos() {
-        return boletoService.buscarBoletos();
-    }
+    // @GetMapping()
+    // public List<BoletoModelo> buscarBoletos() {
+    //     return boletoService.buscarBoletos();
+    // }
 
-    @PostMapping()
-    public BoletoModelo criarBoleto(@RequestBody BoletoModelo boleto) {
-        return boletoService.criarBoleto(boleto);
-    }
+    // @PostMapping()
+    // public BoletoModelo criarBoleto(@RequestBody BoletoModelo boleto) {
+    //     return boletoService.criarBoleto(boleto);
+    // }
 
-    @GetMapping("/{id}")
-    public Optional<BoletoModelo> buscarBoletoPorId(@PathVariable Long id) {
-        return boletoService.buscarBoletoPorId(id);
-    }
+    // @GetMapping("/{id}")
+    // public Optional<BoletoModelo> buscarBoletoPorId(@PathVariable Long id) {
+    //     return boletoService.buscarBoletoPorId(id);
+    // }
 
-    @PostMapping("/{id}/pagar")
-    public BoletoResponseDto pagarBoleto(@PathVariable Long id) {
-        return boletoService.pagarBoleto(id);
-    }
+    // @PostMapping("/{id}/pagar")
+    // public BoletoResponseDto pagarBoleto(@PathVariable Long id) {
+    //     return boletoService.pagarBoleto(id);
+    // }
 
-    @PostMapping("/{id}/cancelar")
-    public BoletoResponseDto cancelarBoleto(@PathVariable Long id) {
-        return boletoService.cancelarBoleto(id);
-    }
+    // @PostMapping("/{id}/cancelar")
+    // public BoletoResponseDto cancelarBoleto(@PathVariable Long id) {
+    //     return boletoService.cancelarBoleto(id);
+    // }
 
 }

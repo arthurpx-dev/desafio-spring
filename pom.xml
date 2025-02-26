@@ -65,9 +65,19 @@
 			<artifactId>caelum-stella-boleto</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-		
-	
-		
+		   <!-- Biblioteca principal do ZXing -->
+    	<dependency>
+        	<groupId>com.google.zxing</groupId>
+        	<artifactId>core</artifactId>
+        	<version>2.3.0</version>
+    	</dependency>
+
+    <!-- Biblioteca com MatrixToImageWriter -->
+    	<dependency>
+        	<groupId>com.google.zxing</groupId>
+        	<artifactId>javase</artifactId>
+        	<version>2.3.0</version>
+    	</dependency>
 	</dependencies>
 
 	<build>
